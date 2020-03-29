@@ -44,7 +44,7 @@ const generateBookmarkElement = function(bookmark){
 
   if(bookmark.expanded){
     expandedView = `<div class="expanded-view">
-        <p class="description">${bookmark.description}</p>
+        <p class="description">${bookmark.desc}</p>
         <a href="${bookmark.url}">Visit Site</a>
     </div>`;
   }
