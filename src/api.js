@@ -1,12 +1,11 @@
-const BASE_URL = 'https://thinkful-list-api.herokuapp.com/chris/bookmarks'
+const BASE_URL = 'https://thinkful-list-api.herokuapp.com/chris/bookmarks';
 
 const getBookmarks = function () {
   return apiFetch(`${BASE_URL}`);
 };
 
-const postBoomark = function(id, title, desc, url, rating) {
+const postBoomark = function(title, desc, url, rating) {
   let newBookmark = JSON.stringify({
-    id, 
     title,
     desc,
     url,
