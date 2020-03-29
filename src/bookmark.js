@@ -29,7 +29,7 @@ function generateAddBookmarkView(){
       <label for="title-input">Bookmark Title</label>
       <input type="text" name="title-input" id="title-input" placeholder="Bookmark Title" required>
       <label for="rating-input">Rate Bookmark(1-5)</label>
-      <input type="number" name="rating-input" id="ratinginput" min="1" max="5" required> 
+      <input type="number" name="rating-input" id="rating-input" min="1" max="5" required> 
       <input type="text" id="description-input" placeholder="Add a description (optional)">
       <div id="form-buttons">
       <button id="cancel-button">Cancel</button>
@@ -73,6 +73,11 @@ const generateBookmarkListString = function (bookmarkList){
 function render(){
   if(STORE.adding === false){
     let bookmarks = [...STORE.bookmarks];
+
+    if(STORE.filter > 0){
+      bookmarks = bookmarks.filter(bookmark => bookmark.rating >= STORE.filter)
+    }
+
     const bookmarkListString = generateBookmarkListString(bookmarks);
     const initialView = generateInitialView();
     $('main').html(initialView);
@@ -122,8 +127,12 @@ function handleDeleteButton(){
   //When #delete-button is clicked, remove the selected bookmark
   $('main').on('click', '#delete-button', event => {
     const id = getItemIdFromElement(event.currentTarget);
-    deleteListItem(id);
-    render();
+    
+    api.deleteBookmark(id)
+      .then(() => {
+        STORE.deleteBookmark(id)
+        render()
+      })
   });
 }
 
@@ -137,6 +146,16 @@ function handleCancelButton(){
   });
 }
 
+function handleFilter(){
+  $('body').on('change', '#filter', e => {
+    e.preventDefault()
+    
+    let rating = $(e.target).val()
+    STORE.filter = rating;
+    render();
+  })
+}
+
 const toggleExpandForBookmark = function (id) {
   const foundBookmark = STORE.bookmarks.find(bookmark => bookmark.id === id);
   foundBookmark.expanded = !foundBookmark.expanded;
@@ -148,22 +167,13 @@ const getItemIdFromElement = function (item) {
     .data('item-id');
 };
 
-const deleteListItem = function (id){
-  const index = STORE.bookmarks.findIndex(item => item.id === id);
-  STORE.bookmarks.splice(index,1);
-};
-
-function minimumRatingFilter(){
-  //When option is selected, only display bookmarks with that rating or higher
-}
-
 const bindEventListeners = function() {
   handleAddBookmarkButton();
   handleExpandView();
   handleDeleteButton();
   handleCancelButton();
   handleCreateBookmarkButton();
-  minimumRatingFilter();
+  handleFilter();
 };
 
 export default {

@@ -2,6 +2,7 @@ import $ from 'jquery';
 import api from './api';
 import app from './bookmark';
 import STORE from './store';
+import './style.css';
 
 function main() {
   api.getBookmarks()

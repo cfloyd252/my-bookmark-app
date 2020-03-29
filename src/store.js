@@ -11,6 +11,11 @@ function addBookmark(bookmark) {
   this.bookmarks.push(bookmark);
 }
 
+function deleteBookmark(id) {
+  const index = this.bookmarks.findIndex(item => item.id === id);
+  this.bookmarks.splice(index,1);
+}
+
 export default {
   bookmarks,
   adding,
@@ -18,4 +23,5 @@ export default {
   filter,
   findById,
   addBookmark,
+  deleteBookmark,
 };

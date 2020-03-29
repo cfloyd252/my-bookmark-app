@@ -21,8 +21,8 @@ const postBoomark = function(title, desc, url, rating) {
   });
 };
 
-const deleteBookmarks = function(id) {
-  return apiFetch(`${BASE_URL}/bookmarks/${id}`, {
+const deleteBookmark = function(id) {
+  return apiFetch(`${BASE_URL}/${id}`, {
     method: 'DELETE'
   });
 };
@@ -50,5 +50,5 @@ const apiFetch = function(...args) {
 export default {
   getBookmarks,
   postBoomark,
-  deleteBookmarks
+  deleteBookmark
 };
