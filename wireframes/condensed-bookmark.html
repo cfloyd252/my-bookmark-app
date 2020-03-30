@@ -1,11 +1,8 @@
-<li class="bookmark">
-    <p class="title">Title 1</p>
+<li class="bookmark" data-item-id="${bookmark.id}">
+    <p class="title">${bookmark.title}</p>
 
-    <span class="fa fa-star"></span>
-    <span class="fa fa-star"></span>
-    <span class="fa fa-star"></span>
-    <span class="fa fa-star"></span>
-    <span class="fa fa-star"></span>
+    <span class="star-rating">${starRating}</span>
 
     <button id="delete-button">Delete Bookmark</button>
+    ${expandedView}
 </li>

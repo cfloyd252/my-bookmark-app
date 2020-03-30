@@ -16,6 +16,10 @@ function deleteBookmark(id) {
   this.bookmarks.splice(index,1);
 }
 
+function setError(error) {
+  this.error = error;
+}
+
 export default {
   bookmarks,
   adding,
@@ -24,4 +28,5 @@ export default {
   findById,
   addBookmark,
   deleteBookmark,
+  setError,
 };

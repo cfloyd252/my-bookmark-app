@@ -23,40 +23,52 @@ function generateInitialView(){
 
 function generateAddBookmarkView(){
   return `<form id="add-bookmark-form">
-  <label for="url-input">Add new Bookmark Url:</label>
+  <label for="url-input">Bookmark Url</label>
   <input type="url" id="url-input" name="url-input">
-  <div class="bookmark-info">
-      <label for="title-input">Bookmark Title</label>
-      <input type="text" name="title-input" id="title-input" placeholder="Bookmark Title" required>
-      <label for="rating-input">Rate Bookmark(1-5)</label>
-      <input type="number" name="rating-input" id="rating-input" min="1" max="5" required> 
-      <input type="text" id="description-input" placeholder="Add a description (optional)">
-      <div id="form-buttons">
-      <button id="cancel-button">Cancel</button>
-      <button type="submit" id="create-button">Create</button>
-      </div>
+  <label for="title-input">Bookmark Title</label>
+  <input type="text" name="title-input" id="title-input" required>
+  <label for="rating-input">Rate Bookmark(1-5)</label>
+  <input type="number" name="rating-input" id="rating-input" min="1" max="5" required> 
+  <label for="description-input">Add a description</label>
+  <input type="text" name="description-input" id="description-input" placeholder="(optional)">
+  <div id="form-buttons">
+  <button id="cancel-button">Cancel</button>
+  <button type="submit" id="create-button">Create</button>
   </div>
 </form>`;
 }
 
+function generateStarRating(rateNumber) {
+  if (rateNumber === 5) {
+    return '★ ★ ★ ★ ★';
+  } else if (rateNumber === 4) {
+    return '★ ★ ★ ★ ☆';
+  } else if (rateNumber === 3) {
+    return '★ ★ ★ ☆ ☆';
+  } else if (rateNumber === 2) {
+    return '★ ★ ☆ ☆ ☆';
+  } else if (rateNumber === 1) {
+    return '★ ☆ ☆ ☆ ☆';
+  } else {
+    return '';
+  }
+}
+
 const generateBookmarkElement = function(bookmark){
   let expandedView = '';
+  let starRating = generateStarRating(bookmark.rating)
 
   if(bookmark.expanded){
     expandedView = `<div class="expanded-view">
         <p class="description">${bookmark.desc}</p>
-        <a href="${bookmark.url}">Visit Site</a>
+        <a href="${bookmark.url}" target="_blank">Visit Site</a>
     </div>`;
   }
     
   return `<li class="bookmark" data-item-id="${bookmark.id}">
     <p class="title">${bookmark.title}</p>
 
-    <span class="fa fa-star"></span>
-    <span class="fa fa-star"></span>
-    <span class="fa fa-star"></span>
-    <span class="fa fa-star"></span>
-    <span class="fa fa-star"></span>
+    <span class="star-rating">${starRating}</span>
 
     <button id="delete-button">Delete Bookmark</button>
     ${expandedView}
