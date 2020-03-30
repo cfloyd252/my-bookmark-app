@@ -38,6 +38,31 @@ function generateAddBookmarkView(){
 </form>`;
 }
 
+function generateError(message) {
+  return `
+        <section class="error-content">
+          <p>${message}</p>
+          <button id="cancel-error">X</button>
+        </section>
+      `;
+}
+
+function renderError() {
+  if (STORE.error) {
+    const error = generateError(STORE.error);
+    $('.error-container').html(error);
+  } else {
+    $('.error-container').empty();
+  }
+};
+
+function handleCloseError() {
+  $('.error-container').on('click', '#cancel-error', () => {
+    STORE.setError(null);
+    renderError();
+  });
+};
+
 function generateStarRating(rateNumber) {
   if (rateNumber === 5) {
     return '★ ★ ★ ★ ★';
@@ -83,6 +108,8 @@ const generateBookmarkListString = function (bookmarkList){
 
 
 function render(){
+  renderError();
+
   if(STORE.adding === false){
     let bookmarks = [...STORE.bookmarks];
 
@@ -185,6 +212,7 @@ const bindEventListeners = function() {
   handleDeleteButton();
   handleCancelButton();
   handleCreateBookmarkButton();
+  handleCloseError();
   handleFilter();
 };
 

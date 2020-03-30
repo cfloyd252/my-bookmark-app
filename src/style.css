@@ -40,3 +40,14 @@ ul {
   flex-direction: column;
   padding: 0;
 }
+
+.error-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.error-container {
+  width: 250px;
+  margin-top: -15px;
+}
